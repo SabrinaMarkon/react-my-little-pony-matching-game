@@ -2,3 +2,10 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.grid {
+  display: grid;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-template-columns: 25% 25% 25% 25%;
+}
+

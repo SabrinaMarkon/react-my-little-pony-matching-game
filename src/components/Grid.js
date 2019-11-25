@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Grid() {
-  // 8 G1s :)
+  const [chosenCard, setchosenCard] = useState(null);
+
+  // 8 G1 Ponies :3
   const PONIES = [
     "Cotton Candy",
     "Blossom",
@@ -44,9 +46,15 @@ export default function Grid() {
     return ponyGrid;
   };
 
+  const handleClick = index => {
+    console.log(index);
+  };
+
   const ponies = buildPonyGrid().map((pony, index) => (
-    <div key={index}>{pony}</div>
+    <div key={index} className="grid__square" onClick={() => handleClick(pony)}>
+      {pony}
+    </div>
   ));
 
-  return <>{ponies}</>;
+  return <div className="grid">{ponies}</div>;
 }
