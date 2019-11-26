@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 
 export default function Grid() {
-  const [chosenCard, setchosenCard] = useState(null);
+  const [chosenCard, setchosenCard] = useState([]);
+  console.log(chosenCard);
 
   // 8 G1 Ponies :3
   const PONIES = [
-    "Cotton Candy",
+    "CottonCandy",
     "Blossom",
     "Bluebell",
     "Snuzzle",
     "Butterscotch",
     "Minty",
-    "Lemon Drop",
+    "LemonDrop",
     "Peachy"
   ];
 
@@ -47,12 +48,19 @@ export default function Grid() {
   };
 
   const handleClick = index => {
-    console.log(index);
+    setchosenCard(chosenCard.push(index));
+    console.log(chosenCard);
   };
 
   const ponies = buildPonyGrid().map((pony, index) => (
-    <div key={index} className="grid__square" onClick={() => handleClick(pony)}>
-      {pony}
+    <div key={`${pony}-${index}`} className="grid__square">
+      <img
+        src={`./images/MLP-${pony}.jpg`}
+        alt={pony}
+        className="grid__square--pony-image"
+        onClick={() => handleClick(pony)}
+      />
+      <div className="grid__square--pony-name">{pony}</div>
     </div>
   ));
 

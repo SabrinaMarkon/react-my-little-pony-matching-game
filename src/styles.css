@@ -5,7 +5,11 @@
 
 .grid {
   display: grid;
+  max-width: 600px;
   grid-template-rows: 25% 25% 25% 25%;
   grid-template-columns: 25% 25% 25% 25%;
 }
 
+.grid__square--pony-image {
+  max-width: 99%;
+}
