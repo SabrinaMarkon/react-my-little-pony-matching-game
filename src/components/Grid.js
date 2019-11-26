@@ -1,68 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Grid() {
-  const [chosenCard, setchosenCard] = useState([]);
-  console.log(chosenCard);
+  const [chosenCard, setChosenCard] = useState({ card1: null, card2: null });
+  const [ponyGrid, setPonyGrid] = useState([]);
 
-  // 8 G1 Ponies :3
-  const PONIES = [
-    "CottonCandy",
-    "Blossom",
-    "Bluebell",
-    "Snuzzle",
-    "Butterscotch",
-    "Minty",
-    "LemonDrop",
-    "Peachy"
-  ];
+  const handleClick = id =>
+    !chosenCard.card1
+      ? setChosenCard({ ...chosenCard, card1: id })
+      : !chosenCard.card2
+      ? setChosenCard({ ...chosenCard, card2: id })
+      : setChosenCard({ ...chosenCard, card1: id, card2: null });
 
-  // Doubled for matching...
-  const GRID = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7];
+  useEffect(() => {
+    // 8 G1 Ponies, double trouble for matching. :3
+    const PONIES = [
+      { id: 0, name: "CottonCandy" },
+      { id: 1, name: "CottonCandy" },
+      { id: 2, name: "Blossom" },
+      { id: 3, name: "Blossom" },
+      { id: 4, name: "Bluebell" },
+      { id: 5, name: "Bluebell" },
+      { id: 6, name: "Snuzzle" },
+      { id: 7, name: "Snuzzle" },
+      { id: 8, name: "Butterscotch" },
+      { id: 9, name: "Butterscotch" },
+      { id: 10, name: "Minty" },
+      { id: 11, name: "Minty" },
+      { id: 12, name: "LemonDrop" },
+      { id: 13, name: "LemonDrop" },
+      { id: 14, name: "Peachy" },
+      { id: 15, name: "Peachy" }
+    ];
+    /*
+    IN-PLACE O(n) SHUFFLE (Fisher-Yates)
+    n = total elements in grid array.
+    m = total remaining unshuffled elements.
+    n - m = total elements already shuffled.
+    i = random index out of remaining elements.
+    */
+    const shuffleArray = arr => {
+      let m = arr.length; // Total unshuffled elements starts with the entire array size.
+      let t, i;
+      // while we have remaining elements that we haven't yet shuffled.
+      while (m) {
+        // choose one of the remaining elements, which is 1 less than m elements (after m is picked up here)
+        i = Math.floor(Math.random() * m--);
+        // swap i with m.
+        t = arr[m];
+        arr[m] = arr[i];
+        arr[i] = t;
+      }
+      return arr;
+    };
+    const newPonyGrid = shuffleArray([...PONIES]);
+    setPonyGrid(newPonyGrid);
+  }, []);
 
-  /*
-  IN-PLACE O(n) SHUFFLE (Fisher-Yates)
-  n = total elements in grid array.
-  m = total remaining unshuffled elements.
-  n - m = total elements already shuffled.
-  i = random index out of remaining elements.
-  */
-  const shuffleArray = arr => {
-    let m = arr.length; // Total unshuffled elements starts with the entire array size.
-    let t, i;
-    // while we have remaining elements that we haven't yet shuffled.
-    while (m) {
-      // choose one of the remaining elements, which is 1 less than m elements (after m is picked up here)
-      i = Math.floor(Math.random() * m--);
-      // swap i with m.
-      t = arr[m];
-      arr[m] = arr[i];
-      arr[i] = t;
-    }
-    return arr;
-  };
-
-  const buildPonyGrid = () => {
-    const shuffledGrid = shuffleArray([...GRID]);
-    const ponyGrid = shuffledGrid.map(item => PONIES[item]);
-    return ponyGrid;
-  };
-
-  const handleClick = index => {
-    setchosenCard(chosenCard.push(index));
-    console.log(chosenCard);
-  };
-
-  const ponies = buildPonyGrid().map((pony, index) => (
-    <div key={`${pony}-${index}`} className="grid__square">
+  const ponies = ponyGrid.map(pony => (
+    <div key={pony.id} className="grid__square">
       <img
-        src={`./images/MLP-${pony}.jpg`}
+        src={`./images/MLP-${pony.name}.jpg`}
         alt={pony}
         className="grid__square--pony-image"
-        onClick={() => handleClick(pony)}
+        onClick={event => handleClick(pony.name)}
       />
-      <div className="grid__square--pony-name">{pony}</div>
+      <div className="grid__square--pony-name">{pony.name}</div>
     </div>
   ));
 
-  return <div className="grid">{ponies}</div>;
+  const didItmatch = () =>
+    chosenCard.card1 === chosenCard.card2 ? "YES!" : "NO!";
+
+  return (
+    <>
+      <div>
+        {chosenCard.card1} - {chosenCard.card2} - {didItmatch()}
+      </div>
+      <div className="grid">{ponies}</div>
+    </>
+  );
 }
