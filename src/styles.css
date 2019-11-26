@@ -5,12 +5,28 @@
 
 .grid {
   display: grid;
-  max-width: 600px;
-  max-height: 600px;
+  margin: auto;
+  border: 1px solid pink;
+  max-width: 1000px;
+  max-height: 1000px;
   grid-template-rows: 25% 25% 25% 25%;
   grid-template-columns: 25% 25% 25% 25%;
 }
 
+.grid__square {
+  border: 1px solid pink;
+}
+
 .grid__square--pony-image {
-  max-width: 99%;
+  max-width: 96%;
+  margin: 3px 2px 0 3px;
+}
+
+.grid__square--pony-image:hover {
+  box-shadow: 2px 2px 5px;
+}
+
+.grid__square--pony-image:active {
+  box-shadow: -2px -2px 4px;
+  /* margin-top: 2px; */
 }

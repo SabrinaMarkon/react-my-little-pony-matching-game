@@ -56,6 +56,11 @@ export default function Grid() {
     setPonyGrid(newPonyGrid);
   }, []);
 
+  // needs to be done by ID - by pony name counts two clicks on the same card with the same
+  // pony as a match!
+  const didItmatch = () =>
+    chosenCard.card1 === chosenCard.card2 ? "YES!" : "NO!";
+
   const ponies = ponyGrid.map(pony => (
     <div key={pony.id} className="grid__square">
       <img
@@ -64,12 +69,9 @@ export default function Grid() {
         className="grid__square--pony-image"
         onClick={event => handleClick(pony.name)}
       />
-      <div className="grid__square--pony-name">{pony.name}</div>
+      {/* <div className="grid__square--pony-name">{pony.name}</div> */}
     </div>
   ));
-
-  const didItmatch = () =>
-    chosenCard.card1 === chosenCard.card2 ? "YES!" : "NO!";
 
   return (
     <>
