@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
 
 export default function Grid() {
-  const [chosenCard, setChosenCard] = useState({ card1: null, card2: null });
+  const [chosenCard, setChosenCard] = useState({
+    card1: null,
+    id1: null,
+    card2: null,
+    id2: null
+  });
   const [ponyGrid, setPonyGrid] = useState([]);
 
-  const handleClick = id =>
+  const handleClick = card =>
     !chosenCard.card1
-      ? setChosenCard({ ...chosenCard, card1: id })
+      ? setChosenCard({ ...chosenCard, card1: card.name, id1: card.id })
       : !chosenCard.card2
-      ? setChosenCard({ ...chosenCard, card2: id })
-      : setChosenCard({ ...chosenCard, card1: id, card2: null });
+      ? setChosenCard({ ...chosenCard, card2: card.name, id2: card.id })
+      : setChosenCard({
+          ...chosenCard,
+          card1: card.name,
+          id1: card.id,
+          card2: null,
+          id2: null
+        });
 
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
@@ -56,10 +67,13 @@ export default function Grid() {
     setPonyGrid(newPonyGrid);
   }, []);
 
-  // needs to be done by ID - by pony name counts two clicks on the same card with the same
-  // pony as a match!
   const didItmatch = () =>
-    chosenCard.card1 === chosenCard.card2 ? "YES!" : "NO!";
+    chosenCard.card1 === chosenCard.card2 &&
+    chosenCard.id1 !== chosenCard.id2 &&
+    chosenCard.card1 &&
+    chosenCard.card2
+      ? "YES!"
+      : "NO!";
 
   const ponies = ponyGrid.map(pony => (
     <div key={pony.id} className="grid__square">
@@ -67,7 +81,7 @@ export default function Grid() {
         src={`./images/MLP-${pony.name}.jpg`}
         alt={pony}
         className="grid__square--pony-image"
-        onClick={event => handleClick(pony.name)}
+        onClick={event => handleClick(pony)}
       />
       {/* <div className="grid__square--pony-name">{pony.name}</div> */}
     </div>
