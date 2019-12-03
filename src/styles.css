@@ -6,7 +6,9 @@
 .grid {
   display: grid;
   margin: auto;
-  border: 1px solid pink;
+  border: 3px solid #faa8a4;
+  background-color: #f6f5b2;
+  padding: 4px;
   max-width: 1000px;
   max-height: 1000px;
   grid-template-rows: 25% 25% 25% 25%;
@@ -23,10 +25,10 @@
 }
 
 .grid__square--pony-image:hover {
-  box-shadow: 2px 2px 5px;
+  box-shadow: 2px 3px 2px;
 }
 
 .grid__square--pony-image:active {
-  box-shadow: -2px -2px 4px;
+  box-shadow: -2px -2px 2px;
   /* margin-top: 2px; */
 }

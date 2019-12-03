@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Card from "./Card";
 
 export default function Grid() {
   const [chosenCard, setChosenCard] = useState({
@@ -9,19 +10,6 @@ export default function Grid() {
   });
   const [ponyGrid, setPonyGrid] = useState([]);
 
-  const handleClick = card =>
-    !chosenCard.card1
-      ? setChosenCard({ ...chosenCard, card1: card.name, id1: card.id })
-      : !chosenCard.card2
-      ? setChosenCard({ ...chosenCard, card2: card.name, id2: card.id })
-      : setChosenCard({
-          ...chosenCard,
-          card1: card.name,
-          id1: card.id,
-          card2: null,
-          id2: null
-        });
-
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
     const PONIES = [
@@ -29,8 +17,8 @@ export default function Grid() {
       { id: 1, name: "CottonCandy" },
       { id: 2, name: "Blossom" },
       { id: 3, name: "Blossom" },
-      { id: 4, name: "Bluebell" },
-      { id: 5, name: "Bluebell" },
+      { id: 4, name: "BlueBelle" },
+      { id: 5, name: "BlueBelle" },
       { id: 6, name: "Snuzzle" },
       { id: 7, name: "Snuzzle" },
       { id: 8, name: "Butterscotch" },
@@ -67,6 +55,7 @@ export default function Grid() {
     setPonyGrid(newPonyGrid);
   }, []);
 
+  // instead of YES and NO we flip the cards.
   const didItmatch = () =>
     chosenCard.card1 === chosenCard.card2 &&
     chosenCard.id1 !== chosenCard.id2 &&
@@ -75,17 +64,41 @@ export default function Grid() {
       ? "YES!"
       : "NO!";
 
-  const ponies = ponyGrid.map(pony => (
-    <div key={pony.id} className="grid__square">
-      <img
-        src={`./images/MLP-${pony.name}.jpg`}
-        alt={pony}
-        className="grid__square--pony-image"
+  const handleClick = card => {
+    !chosenCard.card1
+      ? setChosenCard({ ...chosenCard, card1: card.name, id1: card.id })
+      : !chosenCard.card2
+      ? setChosenCard({ ...chosenCard, card2: card.name, id2: card.id })
+      : setChosenCard({
+          ...chosenCard,
+          card1: card.name,
+          id1: card.id,
+          card2: null,
+          id2: null
+        });
+  };
+
+  const ponies = ponyGrid.map(pony => {
+    console.log(chosenCard.id1);
+    const cardSide =
+      chosenCard.id1 === pony.id || chosenCard.id2 === pony.id
+        ? `MLP-${pony.name}.jpg`
+        : `MLP-BackOfCards.png`;
+    return (
+      <div
+        key={pony.id}
+        className="grid__square"
         onClick={event => handleClick(pony)}
-      />
-      {/* <div className="grid__square--pony-name">{pony.name}</div> */}
-    </div>
-  ));
+      >
+        <img
+          src={`./images/${cardSide}`}
+          alt={pony}
+          id={pony.id}
+          className="grid__square--pony-image"
+        />
+      </div>
+    );
+  });
 
   return (
     <>
