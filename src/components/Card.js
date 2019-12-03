@@ -11,6 +11,12 @@ export default function Card(props) {
         id={pony.id}
         className="grid__square--pony-image"
       />
+      <img
+        src={`./images/${cardSide}`}
+        alt={pony.name}
+        id={pony.id}
+        className="grid__square--pony-image"
+      />
     </div>
   );
 }
