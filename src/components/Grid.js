@@ -85,18 +85,12 @@ export default function Grid() {
         ? `MLP-${pony.name}.jpg`
         : `MLP-BackOfCards.jpg`;
     return (
-      <div
+      <Card
         key={pony.id}
-        className="grid__square"
-        onClick={event => handleClick(pony)}
-      >
-        <img
-          src={`./images/${cardSide}`}
-          alt={pony.name}
-          id={pony.id}
-          className="grid__square--pony-image"
-        />
-      </div>
+        pony={pony}
+        cardSide={cardSide}
+        handleClick={handleClick}
+      />
     );
   });
 
