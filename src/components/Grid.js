@@ -6,7 +6,8 @@ export default function Grid() {
     card1: null,
     id1: null,
     card2: null,
-    id2: null
+    id2: null,
+    matches: []
   });
   const [ponyGrid, setPonyGrid] = useState([]);
 
@@ -57,12 +58,12 @@ export default function Grid() {
 
   // instead of YES and NO we flip the cards.
   const didItmatch = () =>
-    chosenCard.card1 === chosenCard.card2 &&
-    chosenCard.id1 !== chosenCard.id2 &&
     chosenCard.card1 &&
-    chosenCard.card2
-      ? "YES!"
-      : "NO!";
+    chosenCard.card2 &&
+    chosenCard.card1 === chosenCard.card2 && // names are the same for both cards.
+    chosenCard.id1 !== chosenCard.id2 // ids must be different so we know match is not 2 of the same card.
+      ? "YES" // yes - leave turned up and make unclickable somehow.
+      : "NO!"; // no - pause then flip back to hide.
 
   const handleClick = card => {
     !chosenCard.card1
@@ -79,11 +80,10 @@ export default function Grid() {
   };
 
   const ponies = ponyGrid.map(pony => {
-    console.log(chosenCard.id1);
     const cardSide =
       chosenCard.id1 === pony.id || chosenCard.id2 === pony.id
         ? `MLP-${pony.name}.jpg`
-        : `MLP-BackOfCards.png`;
+        : `MLP-BackOfCards.jpg`;
     return (
       <div
         key={pony.id}
@@ -103,7 +103,7 @@ export default function Grid() {
   return (
     <>
       <div>
-        {chosenCard.card1} - {chosenCard.card2} - {didItmatch()}
+        {chosenCard.card1} - {chosenCard.card2} - {didItmatch()} <br />
       </div>
       <div className="grid">{ponies}</div>
     </>

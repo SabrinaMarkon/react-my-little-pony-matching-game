@@ -1,6 +1,7 @@
 .App {
   font-family: sans-serif;
   text-align: center;
+  perspective: 1000px; /* creates 3D space */
 }
 
 .grid {
