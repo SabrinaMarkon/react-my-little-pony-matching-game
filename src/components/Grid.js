@@ -92,7 +92,7 @@ export default function Grid() {
       >
         <img
           src={`./images/${cardSide}`}
-          alt={pony}
+          alt={pony.name}
           id={pony.id}
           className="grid__square--pony-image"
         />
