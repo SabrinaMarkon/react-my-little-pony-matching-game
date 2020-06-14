@@ -1,11 +1,10 @@
 import React from "react";
 
-const Reset = props => {
+export default function Reset(props) {
+  const handleReset = () => props.handleReset();
   return (
-    <button className="reset" onClick={props.onClick}>
+    <button className="reset" onClick={handleReset}>
       Reset Game
     </button>
   );
-};
-
-export default Reset;
+}

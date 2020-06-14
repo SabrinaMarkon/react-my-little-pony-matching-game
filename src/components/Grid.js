@@ -10,7 +10,7 @@ export default function Grid() {
     card2: null,
     id2: null
   });
-  const [toggleReset, setToggleReset] = useState(0);
+  const [toggleReset, setToggleReset] = useState(false);
   const [matches, setMatches] = useState([]);
   const [matchedCardText, setMatchedCardText] = useState("Start Playing!");
 
@@ -34,16 +34,6 @@ export default function Grid() {
       { id: 14, name: "Peachy" },
       { id: 15, name: "Peachy" }
     ];
-
-    /* If the reset button was clicked, make sure all cards are face down. */
-    setChosenCard({
-      card1: null,
-      id1: null,
-      card2: null,
-      id2: null
-    });
-    setMatches([]);
-    setMatchedCardText("Start Playing!");
 
     /*
     IN-PLACE O(n) SHUFFLE (Fisher-Yates)
@@ -104,6 +94,19 @@ export default function Grid() {
         });
   };
 
+  const handleReset = () => {
+    setToggleReset(!toggleReset);
+    /* If the reset button was clicked, make sure all cards are face down. */
+    setChosenCard({
+      card1: null,
+      id1: null,
+      card2: null,
+      id2: null
+    });
+    setMatches([]);
+    setMatchedCardText("Start Playing!");
+  };
+
   const ponies = ponyGrid.map(pony => {
     const inMatches = matches.includes(pony.name);
     const cardSide =
@@ -125,7 +128,7 @@ export default function Grid() {
     <>
       <div className="match">{matchedCardText}</div>
       <div className="grid">{ponies}</div>
-      <Reset onClick={() => setToggleReset(!toggleReset)} />
+      <Reset handleReset={handleReset} />
     </>
   );
 }
