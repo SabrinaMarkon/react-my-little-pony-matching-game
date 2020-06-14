@@ -12,7 +12,7 @@ export default function Grid() {
   });
   const [toggleReset, setToggleReset] = useState(0);
   const [matches, setMatches] = useState([]);
-  const [matchedCardText, setMatchedCardText] = useState();
+  const [matchedCardText, setMatchedCardText] = useState("Start Playing!");
 
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
@@ -43,7 +43,7 @@ export default function Grid() {
       id2: null
     });
     setMatches([]);
-    setMatchedCardText();
+    setMatchedCardText("Start Playing!");
 
     /*
     IN-PLACE O(n) SHUFFLE (Fisher-Yates)
@@ -70,7 +70,7 @@ export default function Grid() {
     setPonyGrid(newPonyGrid);
   }, [toggleReset]);
 
-  const didItMatch = () => {
+  useEffect(() => {
     if (
       chosenCard.card1 &&
       chosenCard.card2 &&
@@ -78,10 +78,17 @@ export default function Grid() {
       chosenCard.id1 !== chosenCard.id2
     ) {
       // Add pony name to the matches array so we know this set should remain face up.
-      setMatches([...matches, chosenCard.card1]);
-      setMatchedCardText(`You Matched ${chosenCard.card1}!`);
+      const newMatches = [...matches, chosenCard.card1];
+      setMatches(newMatches);
+      if (matches.length === 8) {
+        setMatchedCardText(
+          `You Matched ${chosenCard.card1}! AND You Win! Game Over!`
+        );
+      } else {
+        setMatchedCardText(`You Matched ${chosenCard.card1}!`);
+      }
     }
-  };
+  }, [matches, chosenCard]);
 
   const handleClick = card => {
     !chosenCard.card1
@@ -95,7 +102,6 @@ export default function Grid() {
           card2: null,
           id2: null
         });
-    didItMatch();
   };
 
   const ponies = ponyGrid.map(pony => {
@@ -117,13 +123,9 @@ export default function Grid() {
 
   return (
     <>
-      <div className="match">
-        {matchedCardText} <br />
-      </div>
+      <div className="match">{matchedCardText}</div>
       <div className="grid">{ponies}</div>
-      <div>
-        <Reset onClick={() => setToggleReset(!toggleReset)} />
-      </div>
+      <Reset onClick={() => setToggleReset(!toggleReset)} />
     </>
   );
 }
