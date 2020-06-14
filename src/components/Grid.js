@@ -12,7 +12,7 @@ export default function Grid() {
   });
   const [toggleReset, setToggleReset] = useState(0);
   const [matches, setMatches] = useState([]);
-  const [matchedCards, setMatchedCards] = useState();
+  const [matchedCardText, setMatchedCardText] = useState();
 
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
@@ -42,6 +42,8 @@ export default function Grid() {
       card2: null,
       id2: null
     });
+    setMatches([]);
+    setMatchedCardText();
 
     /*
     IN-PLACE O(n) SHUFFLE (Fisher-Yates)
@@ -77,7 +79,7 @@ export default function Grid() {
     ) {
       // Add pony name to the matches array so we know this set should remain face up.
       setMatches([...matches, chosenCard.card1]);
-      setMatchedCards(`You Matched ${chosenCard.card1}!`);
+      setMatchedCardText(`You Matched ${chosenCard.card1}!`);
     }
   };
 
@@ -116,7 +118,7 @@ export default function Grid() {
   return (
     <>
       <div className="match">
-        {matchedCards} <br />
+        {matchedCardText} <br />
       </div>
       <div className="grid">{ponies}</div>
       <div className="reset">
