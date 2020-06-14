@@ -121,7 +121,7 @@ export default function Grid() {
         {matchedCardText} <br />
       </div>
       <div className="grid">{ponies}</div>
-      <div className="reset">
+      <div>
         <Reset onClick={() => setToggleReset(!toggleReset)} />
       </div>
     </>

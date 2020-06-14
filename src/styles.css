@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
 .App {
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   text-align: center;
 }
 
@@ -24,7 +26,7 @@
 .grid__square--pony-image-matched {
   max-width: 96%;
   margin: 3px 2px 0 3px;
-  box-shadow: 2px 3px 2px #393939;
+  box-shadow: 2px 3px 3px #393939;
 }
 
 .grid__square--pony-image-matched {
@@ -33,4 +35,29 @@
 
 .grid__square--pony-image:active {
   box-shadow: -2px -2px 2px;
+}
+
+.reset {
+  margin: 1em;
+  padding: 1em;
+  width: 150px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  color: #393939;
+  border: 3px solid #faa8a4;
+  border-radius: 50%;
+  background-color: #f6f5b2;
+  box-shadow: 2px 3px 3px #393939;
+}
+
+.reset:hover {
+  box-shadow: 3px 4px 4psx #393939;
+}
+
+.reset:active {
+  box-shadow: -2px -2px 2px;
+}
+
+.reset:focus {
+  outline-style: none;
 }
