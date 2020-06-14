@@ -3,16 +3,26 @@
 .App {
   font-family: "Open Sans", sans-serif;
   text-align: center;
+  max-width: 600px;
+  max-height: 600px;
+  margin: auto;
+}
+
+.match {
+  margin: 1em 0;
+  padding: 1em;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  color: #393939;
+  border: 3px solid #faa8a4;
+  background-color: #f6f5b2;
 }
 
 .grid {
   display: grid;
-  margin: auto;
   border: 3px solid #faa8a4;
   background-color: #f6f5b2;
   padding: 4px;
-  max-width: 800px;
-  max-height: 800px;
   grid-template-rows: 25% 25% 25% 25%;
   grid-template-columns: 25% 25% 25% 25%;
 }
