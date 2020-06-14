@@ -12,6 +12,7 @@ export default function Grid() {
   });
   const [toggleReset, setToggleReset] = useState(0);
   const [matches, setMatches] = useState([]);
+  const [matchedCards, setMatchedCards] = useState();
 
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
@@ -74,8 +75,9 @@ export default function Grid() {
       chosenCard.card1 === chosenCard.card2 && // names are the same for both cards.
       chosenCard.id1 !== chosenCard.id2
     ) {
-      // ids must be different so we know match is not 2 of the same card.)
-      return `You Matched ${chosenCard.card1}!`;
+      // Add pony name to the matches array so we know this set should remain face up.
+      setMatches([...matches, chosenCard.card1]);
+      setMatchedCards(`You Matched ${chosenCard.card1}!`);
     }
   };
 
@@ -91,11 +93,14 @@ export default function Grid() {
           card2: null,
           id2: null
         });
+    didItMatch();
   };
 
   const ponies = ponyGrid.map(pony => {
     const cardSide =
-      chosenCard.id1 === pony.id || chosenCard.id2 === pony.id
+      chosenCard.id1 === pony.id ||
+      chosenCard.id2 === pony.id ||
+      matches.includes(pony.name)
         ? `MLP-${pony.name}.jpg`
         : `MLP-FrontOfCards.jpg`;
     return (
@@ -108,12 +113,10 @@ export default function Grid() {
     );
   });
 
-  let matched = didItMatch();
-
   return (
     <>
       <div className="match">
-        {matched} <br />
+        {matchedCards} <br />
       </div>
       <div className="grid">{ponies}</div>
       <div className="reset">
