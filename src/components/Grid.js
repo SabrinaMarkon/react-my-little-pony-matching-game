@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
+import Reset from "./Reset";
 
 export default function Grid() {
+  const [ponyGrid, setPonyGrid] = useState([]);
   const [chosenCard, setChosenCard] = useState({
     card1: null,
     id1: null,
     card2: null,
-    id2: null,
-    matches: []
+    id2: null
   });
-  const [ponyGrid, setPonyGrid] = useState([]);
+  const [toggleReset, setToggleReset] = useState(0);
+  const [matches, setMatches] = useState([]);
 
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
@@ -31,6 +33,15 @@ export default function Grid() {
       { id: 14, name: "Peachy" },
       { id: 15, name: "Peachy" }
     ];
+
+    /* If the reset button was clicked, make sure all cards are face down. */
+    setChosenCard({
+      card1: null,
+      id1: null,
+      card2: null,
+      id2: null
+    });
+
     /*
     IN-PLACE O(n) SHUFFLE (Fisher-Yates)
     n = total elements in grid array.
@@ -54,16 +65,19 @@ export default function Grid() {
     };
     const newPonyGrid = shuffleArray([...PONIES]);
     setPonyGrid(newPonyGrid);
-  }, []);
+  }, [toggleReset]);
 
-  // instead of YES and NO we flip the cards.
-  const didItmatch = () =>
-    chosenCard.card1 &&
-    chosenCard.card2 &&
-    chosenCard.card1 === chosenCard.card2 && // names are the same for both cards.
-    chosenCard.id1 !== chosenCard.id2 // ids must be different so we know match is not 2 of the same card.
-      ? "YES" // yes - leave turned up and make unclickable somehow.
-      : "NO!"; // no - pause then flip back to hide.
+  const didItMatch = () => {
+    if (
+      chosenCard.card1 &&
+      chosenCard.card2 &&
+      chosenCard.card1 === chosenCard.card2 && // names are the same for both cards.
+      chosenCard.id1 !== chosenCard.id2
+    ) {
+      // ids must be different so we know match is not 2 of the same card.)
+      return `You Matched ${chosenCard.card1}!`;
+    }
+  };
 
   const handleClick = card => {
     !chosenCard.card1
@@ -83,7 +97,7 @@ export default function Grid() {
     const cardSide =
       chosenCard.id1 === pony.id || chosenCard.id2 === pony.id
         ? `MLP-${pony.name}.jpg`
-        : `MLP-BackOfCards.jpg`;
+        : `MLP-FrontOfCards.jpg`;
     return (
       <Card
         key={pony.id}
@@ -94,12 +108,17 @@ export default function Grid() {
     );
   });
 
+  let matched = didItMatch();
+
   return (
     <>
-      <div>
-        {chosenCard.card1} - {chosenCard.card2} - {didItmatch()} <br />
+      <div className="match">
+        {matched} <br />
       </div>
       <div className="grid">{ponies}</div>
+      <div className="reset">
+        <Reset onClick={() => setToggleReset(!toggleReset)} />
+      </div>
     </>
   );
 }
