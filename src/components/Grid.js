@@ -99,10 +99,9 @@ export default function Grid() {
   };
 
   const ponies = ponyGrid.map(pony => {
+    const inMatches = matches.includes(pony.name);
     const cardSide =
-      chosenCard.id1 === pony.id ||
-      chosenCard.id2 === pony.id ||
-      matches.includes(pony.name)
+      chosenCard.id1 === pony.id || chosenCard.id2 === pony.id || inMatches
         ? `MLP-${pony.name}.jpg`
         : `MLP-FrontOfCards.jpg`;
     return (
@@ -110,6 +109,7 @@ export default function Grid() {
         key={pony.id}
         pony={pony}
         cardSide={cardSide}
+        inMatches={inMatches}
         handleClick={handleClick}
       />
     );

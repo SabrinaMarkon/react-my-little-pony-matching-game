@@ -20,14 +20,15 @@
   transition: all 1.3s ease-in;
 }
 
-.grid__square--pony-image {
+.grid__square--pony-image,
+.grid__square--pony-image-matched {
   max-width: 96%;
   margin: 3px 2px 0 3px;
+  box-shadow: 2px 3px 2px #393939;
 }
 
-.grid__square--pony-image:hover {
-  box-shadow: 2px 3px 2px;
-  /* transform: rotateY(180deg); */
+.grid__square--pony-image-matched {
+  box-shadow: none;
 }
 
 .grid__square--pony-image:active {
