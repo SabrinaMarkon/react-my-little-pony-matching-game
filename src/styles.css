@@ -71,3 +71,13 @@
 .reset:focus {
   outline-style: none;
 }
+
+@media (max-width: 200px) {
+  .match {
+    font-size: 0.7em;
+  }
+  .reset {
+    width: 75px;
+    font-size: 0.7em;
+  }
+}
