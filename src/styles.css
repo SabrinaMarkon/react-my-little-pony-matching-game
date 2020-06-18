@@ -39,6 +39,10 @@
   box-shadow: 2px 3px 3px #393939;
 }
 
+.grid__square--pony-image:hover {
+  cursor: pointer;
+}
+
 .grid__square--pony-image-matched {
   box-shadow: none;
 }
@@ -61,7 +65,8 @@
 }
 
 .reset:hover {
-  box-shadow: 3px 4px 4psx #393939;
+  cursor: pointer;
+  box-shadow: 3px 4px 4px #393939;
 }
 
 .reset:active {
