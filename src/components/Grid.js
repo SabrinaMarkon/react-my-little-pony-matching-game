@@ -68,13 +68,15 @@ export default function Grid() {
       chosenCard.id1 !== chosenCard.id2
     ) {
       // Add pony name to the matches array so we know this set should remain face up.
-      // const newMatches = [...matches, chosenCard.card1];
+      // const newMatches = [...prevMatches, chosenCard.card1];
       setMatches(prevMatches => {
-        let newMatches = [...prevMatches, chosenCard.card1];
+        const newMatches = [...prevMatches, chosenCard.card1];
         if (newMatches.length === 8) {
-          setMatchedCardText(
-            `You Matched ${chosenCard.card1}! AND You Win! Game Over!`
-          );
+          setMatchedCardText([
+            `You matched ${chosenCard.card1}! AND have won the game!`,
+            <br />,
+            `Click the Reset button to play again!`
+          ]);
         } else {
           setMatchedCardText(`You Matched ${chosenCard.card1}!`);
         }
