@@ -13,6 +13,7 @@ export default function Grid() {
   const [toggleReset, setToggleReset] = useState(false);
   const [matches, setMatches] = useState([]);
   const [matchedCardText, setMatchedCardText] = useState("Start Playing!");
+  const [moveCount, setMoveCount] = useState(0);
 
   useEffect(() => {
     // 8 G1 Ponies, double trouble for matching. :3
@@ -86,17 +87,24 @@ export default function Grid() {
   }, [chosenCard]);
 
   const handleClick = card => {
-    !chosenCard.card1
-      ? setChosenCard({ ...chosenCard, card1: card.name, id1: card.id })
-      : !chosenCard.card2
-      ? setChosenCard({ ...chosenCard, card2: card.name, id2: card.id })
-      : setChosenCard({
-          ...chosenCard,
-          card1: card.name,
-          id1: card.id,
-          card2: null,
-          id2: null
-        });
+    if (!chosenCard.card1) {
+      // Record the first card of this set of 2 chosen by the user.
+      setChosenCard({ ...chosenCard, card1: card.name, id1: card.id });
+    } else if (!chosenCard.card2) {
+      // Record the second card of this set of 2 chosen by the user.
+      setChosenCard({ ...chosenCard, card2: card.name, id2: card.id });
+      let newMoveCount = moveCount + 1;
+      setMoveCount(newMoveCount);
+    } else {
+      // Record this card as the first card of a set of 2.
+      setChosenCard({
+        ...chosenCard,
+        card1: card.name,
+        id1: card.id,
+        card2: null,
+        id2: null
+      });
+    }
   };
 
   const handleReset = () => {
@@ -110,6 +118,7 @@ export default function Grid() {
     });
     setMatches([]);
     setMatchedCardText("Start Playing!");
+    setMoveCount(0);
   };
 
   const ponies = ponyGrid.map(pony => {
@@ -131,7 +140,9 @@ export default function Grid() {
 
   return (
     <>
-      <div className="match">{matchedCardText}</div>
+      <div className="match">
+        {matchedCardText} {moveCount}
+      </div>
       <div className="grid">{ponies}</div>
       <Reset handleReset={handleReset} />
     </>
