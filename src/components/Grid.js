@@ -140,9 +140,8 @@ export default function Grid() {
 
   return (
     <>
-      <div className="match">
-        {matchedCardText} {moveCount}
-      </div>
+      <div className="match">{matchedCardText}</div>
+      <div className="movecount">Moves: {moveCount}</div>
       <div className="grid">{ponies}</div>
       <Reset handleReset={handleReset} />
     </>

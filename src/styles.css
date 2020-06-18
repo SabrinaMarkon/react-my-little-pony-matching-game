@@ -8,7 +8,8 @@
   margin: auto;
 }
 
-.match {
+.match,
+.movecount {
   margin: 1em 0;
   padding: 1em;
   font-family: "Open Sans", sans-serif;
@@ -16,6 +17,10 @@
   color: #393939;
   border: 3px solid #faa8a4;
   background-color: #f6f5b2;
+}
+
+.movecount {
+  padding: 0.2em;
 }
 
 .grid {
